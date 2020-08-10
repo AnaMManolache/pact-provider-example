@@ -1,0 +1,43 @@
+{
+  "consumer": {
+    "name": "calculator-consumer"
+  },
+  "provider": {
+    "name": "calculator-provider"
+  },
+  "interactions": [
+    {
+      "description": "POST /calculate -> 200",
+      "request": {
+        "method": "POST",
+        "path": "/calculate",
+        "body": {
+          "operants": [
+            1,
+            2
+          ],
+          "operation": "+"
+        },
+        "headers": {
+          "connection": "keep-alive",
+          "accept": "application/json, application/*+json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "body": "3"
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.9"
+    }
+  }
+}
