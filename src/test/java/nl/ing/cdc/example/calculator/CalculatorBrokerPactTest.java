@@ -4,6 +4,7 @@ import au.com.dius.pact.core.model.Interaction;
 import au.com.dius.pact.core.model.Pact;
 import au.com.dius.pact.provider.junit.Provider;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
+import au.com.dius.pact.provider.junit.loader.PactBrokerAuth;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
@@ -19,7 +20,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource(properties = "server.port=8081")
-@PactBroker
+@PactBroker(scheme = "https", host = "${PACT_BROKER_HOST}",
+        authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 @ExtendWith(SpringExtension.class)
 @Provider("CalculationAPI")
 public class CalculatorBrokerPactTest {
@@ -31,21 +33,10 @@ public class CalculatorBrokerPactTest {
     }
 
     @BeforeAll
-    static void pactBrokerSetup(@Value("${pactbroker.host}") String host,
-                                @Value("${pactbroker.port}") String port,
-                                @Value("${pactbroker.scheme}") String scheme,
-                                @Value("${pactbroker.auth.username}") String username,
-                                @Value("${pactbroker.auth.password}") String password,
-                                @Value("${pact.verifier.publishResults}") String publishResults,
+    static void pactBrokerSetup(@Value("${pact.verifier.publishResults}") String publishResults,
                                 @Value("${pact.consumer.version}") String pactConsumerVersion) {
         System.setProperty("pact.verifier.publishResults", publishResults);
         System.setProperty("pact.consumer.version", pactConsumerVersion);
-
-        System.setProperty("pactbroker.host", host);
-        System.setProperty("pactbroker.port", port);
-        System.setProperty("pactbroker.scheme", scheme);
-        System.setProperty("pactbroker.auth.username", username);
-        System.setProperty("pactbroker.auth.password", password);
     }
 
     @TestTemplate
