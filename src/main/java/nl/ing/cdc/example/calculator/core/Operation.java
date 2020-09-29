@@ -8,37 +8,48 @@ public enum Operation {
 
     PLUS {
         @Override
-        public int calculate(int first, int second) {
-            return first + second;
+        public Number calculate(Number first, Number second) {
+            return first.intValue() + second.intValue();
         }
     },
     MINUS {
         @Override
-        public int calculate(int first, int second) {
-            return first - second;
+        public Number calculate(Number first, Number second) {
+            return first.intValue() - second.intValue();
         }
     },
     DIVISION {
         @Override
-        public int calculate(int first, int second) {
-            return first / second;
+        public Number calculate(Number first, Number second) {
+            return first.doubleValue() / second.doubleValue();
         }
     },
     MULTIPLICATION {
         @Override
-        public int calculate(int first, int second) {
-            return first * second;
+        public Number calculate(Number first, Number second) {
+            return first.intValue() * second.intValue();
+        }
+    },
+    EXPONENTIATION {
+        @Override
+        public Number calculate(Number first, Number second) {
+            return Math.pow(first.doubleValue(), second.doubleValue());
         }
     };
 
-    private static Map<Character, Operation> operations =
-            Map.of('+', PLUS, '-', MINUS, '/', DIVISION, '*', MULTIPLICATION);
+    private static Map<String, Operation> operations =
+            Map.of("+", PLUS,
+                    "-", MINUS,
+                    "/", DIVISION,
+                    "*", MULTIPLICATION,
+                    "**", EXPONENTIATION
+            );
 
     @JsonCreator
-    public static Operation fromSymbol(char symbol) {
+    public static Operation fromSymbol(String symbol) {
         return operations.get(symbol);
     }
 
-    public abstract int calculate(int first, int second);
+    public abstract Number calculate(Number first, Number second);
 
 }
