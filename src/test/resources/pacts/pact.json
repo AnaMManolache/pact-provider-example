@@ -1,43 +1,114 @@
 {
   "consumer": {
-    "name": "calculator-consumer"
+    "name": "PactCalculator iOS Client"
   },
   "provider": {
-    "name": "calculator-provider"
+    "name": "CalculationAPI"
   },
   "interactions": [
     {
-      "description": "POST /calculate -> 200",
+      "description": "Addition interaction",
       "request": {
-        "method": "POST",
+        "method": "post",
         "path": "/calculate",
         "body": {
           "operants": [
             1,
-            2
+            2,
+            3,
+            4,
+            5
           ],
           "operation": "+"
-        },
-        "headers": {
-          "connection": "keep-alive",
-          "accept": "application/json, application/*+json"
         }
       },
       "response": {
         "status": 200,
         "headers": {
-          "content-type": "application/json"
+          "Content-Type": "application/json"
         },
-        "body": "3"
+        "body": {
+          "result": 15
+        }
+      }
+    },
+    {
+      "description": "Division interaction",
+      "request": {
+        "method": "post",
+        "path": "/calculate",
+        "body": {
+          "operants": [
+            9,
+            2,
+            3,
+            3
+          ],
+          "operation": "/"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "result": 0.5
+        }
+      }
+    },
+    {
+      "description": "Multiplication interaction",
+      "request": {
+        "method": "post",
+        "path": "/calculate",
+        "body": {
+          "operants": [
+            5,
+            5,
+            3
+          ],
+          "operation": "*"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "result": 75
+        }
+      }
+    },
+    {
+      "description": "Subtraction interaction",
+      "request": {
+        "method": "post",
+        "path": "/calculate",
+        "body": {
+          "operants": [
+            9,
+            2,
+            4
+          ],
+          "operation": "-"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "result": 3
+        }
       }
     }
   ],
   "metadata": {
     "pactSpecification": {
       "version": "2.0.0"
-    },
-    "pact-jvm": {
-      "version": "4.0.9"
     }
   }
 }
