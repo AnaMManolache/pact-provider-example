@@ -83,7 +83,7 @@
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-provider-junit5</artifactId>
-            <version>4.0.0-beta.6</version>
+            <version>4.0.10</version>
         </dependency>
     </dependencies>
 
@@ -103,7 +103,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <release>11</release> 
+                    <release>11</release>
                 </configuration>
             </plugin>
         </plugins>
