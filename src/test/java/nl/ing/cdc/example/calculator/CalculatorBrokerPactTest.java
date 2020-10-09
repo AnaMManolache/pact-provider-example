@@ -5,6 +5,7 @@ import au.com.dius.pact.core.model.Pact;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
+import au.com.dius.pact.provider.junitsupport.IgnoreNoPactsToVerify;
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
 import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
@@ -22,15 +23,20 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @TestPropertySource(properties = "server.port=8081")
 @PactBroker(scheme = "https", host = "${PACT_BROKER_HOST}",
         enablePendingPacts = "${PACT_ENABLE_PENDING},",
+        tags={"${CONSUMER_TAGS}"},
         authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 @ExtendWith(SpringExtension.class)
 @Provider("CalculationAPI")
+@IgnoreNoPactsToVerify
 public class CalculatorBrokerPactTest {
 
     @BeforeEach
     void setTarget(PactVerificationContext context) {
         HttpTestTarget target = new HttpTestTarget("localhost", 8081);
-        context.setTarget(target);
+
+        if (context != null) {
+            context.setTarget(target);
+        }
     }
 
     @BeforeAll
@@ -43,6 +49,8 @@ public class CalculatorBrokerPactTest {
     @TestTemplate
     @ExtendWith(PactVerificationInvocationContextProvider.class)
     void testTemplate(Pact<Interaction> pact, Interaction interaction, HttpRequest request, PactVerificationContext context) {
-        context.verifyInteraction();
+        if (context != null) {
+            context.verifyInteraction();
+        }
     }
 }
