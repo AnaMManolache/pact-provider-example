@@ -2,12 +2,12 @@ package nl.ing.cdc.example.calculator;
 
 import au.com.dius.pact.core.model.Interaction;
 import au.com.dius.pact.core.model.Pact;
-import au.com.dius.pact.provider.junit.Provider;
-import au.com.dius.pact.provider.junit.loader.PactBroker;
-import au.com.dius.pact.provider.junit.loader.PactBrokerAuth;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
+import au.com.dius.pact.provider.junitsupport.Provider;
+import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
+import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
 import org.apache.http.HttpRequest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource(properties = "server.port=8081")
 @PactBroker(scheme = "https", host = "${PACT_BROKER_HOST}",
+        enablePendingPacts = "${PACT_ENABLE_PENDING},",
         authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 @ExtendWith(SpringExtension.class)
 @Provider("CalculationAPI")
