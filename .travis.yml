@@ -1,4 +1,8 @@
 language: java
 jdk: openjdk11
 install: true
-script: mvn clean install
+before install:
+  if: branch IS NOT master
+  env: CONSUMER_TAGS=concat(CONSUMER_TAGS,",",env(PACT_CONSUMER_VERSION_TAGS))
+script:
+    mvn clean install
