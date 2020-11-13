@@ -41,9 +41,11 @@ public class CalculatorBrokerPactTest {
 
     @BeforeAll
     static void pactBrokerSetup(@Value("${pact.verifier.publishResults}") String publishResults,
-                                @Value("${pact.consumer.version}") String pactConsumerVersion) {
+                                @Value("${pact.consumer.version}") String pactConsumerVersion,
+                                @Value("${pact.provider.version}") String pactProviderVersion) {
         System.setProperty("pact.verifier.publishResults", publishResults);
         System.setProperty("pact.consumer.version", pactConsumerVersion);
+        System.setProperty("pact.provider.version", pactProviderVersion);
     }
 
     @TestTemplate
