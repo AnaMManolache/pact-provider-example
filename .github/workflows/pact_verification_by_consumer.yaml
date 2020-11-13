@@ -26,3 +26,4 @@ jobs:
         PACT_ENABLE_PENDING: false
         pact_consumer_version:  ${{ github.event.client_payload.consumer_version }}
         pact_verifier_publish: true
+        pact.provider.version: 0.0.1
