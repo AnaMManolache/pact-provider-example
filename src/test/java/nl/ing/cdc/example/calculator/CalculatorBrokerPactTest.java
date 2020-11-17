@@ -22,8 +22,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource(properties = "server.port=8081")
 @PactBroker(scheme = "https", host = "${PACT_BROKER_HOST}",
-        enablePendingPacts = "${PACT_ENABLE_PENDING},",
-        tags={"${CONSUMER_TAGS}"},
+        enablePendingPacts = "#{systemProperties['PACT_ENABLE_PENDING'] ?: 'false'",
+        tags={"#{systemProperties['CONSUMER_TAGS'] ?: ''}"},
         authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 @ExtendWith(SpringExtension.class)
 @Provider("CalculationAPI")
@@ -40,8 +40,8 @@ public class CalculatorBrokerPactTest {
     }
 
     @BeforeAll
-    static void pactBrokerSetup(@Value("${pact.verifier.publishResults}") String publishResults,
-                                @Value("${pact.consumer.version}") String pactConsumerVersion,
+    static void pactBrokerSetup(@Value("#{systemProperties['pact_verifier_publish'] ?: 'false'}") String publishResults,
+                                @Value("#{systemProperties['pact_consumer_version'] ?: ''}") String pactConsumerVersion,
                                 @Value("${pact.provider.version}") String pactProviderVersion) {
         System.setProperty("pact.verifier.publishResults", publishResults);
         System.setProperty("pact.consumer.version", pactConsumerVersion);
