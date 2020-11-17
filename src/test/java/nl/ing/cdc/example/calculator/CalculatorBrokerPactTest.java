@@ -43,7 +43,7 @@ public class CalculatorBrokerPactTest {
     static void pactBrokerSetup(@Value("#{systemProperties['pact_verifier_publish'] ?: 'true'}") String publishResults,
                                 @Value("#{systemProperties['pact_consumer_version'] ?: ''}") String pactConsumerVersion,
                                 @Value("${pact.provider.version}") String pactProviderVersion) {
-        System.setProperty("pact.verifier.publishResults", publishResults);
+        System.setProperty("pact.verifier.publishResults", "true");
         System.setProperty("pact.consumer.version", pactConsumerVersion);
         System.setProperty("pact.provider.version", pactProviderVersion);
     }
