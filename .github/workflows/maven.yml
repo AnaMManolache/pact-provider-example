@@ -15,10 +15,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-    - name: Test github env var setting
-      run: echo "pactbroker.tags="test_feature"" >> $GITHUB_ENV
-    - name: Set provider version
-      run: echo "PACT_PROVIDER_VERSION="$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)-$(git rev-parse --short HEAD)"" >> $GITHUB_ENV
     - name: Build with Maven
       run: mvn verify -B
       env:
@@ -26,6 +22,5 @@ jobs:
         PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
         PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
         PACT_ENABLE_PENDING: false
-        pact_consumer_version:  ""
+        pact_consumer_version:  6.0.0
         pact_verifier_publish: true
-        PACT_PROVIDER_VERSION: ${{ env.PACT_PROVIDER_VERSION }}
