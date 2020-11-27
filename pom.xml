@@ -134,6 +134,10 @@
                     <includeOnlyProperties>
                         <includeOnlyProperty>git.commit.id</includeOnlyProperty>
                     </includeOnlyProperties>
+                    <gitDescribe>
+                           <skip>false</skip>
+                           <always>true</always>
+                    </gitDescribe>
                 </configuration>
             </plugin>
         </plugins>
