@@ -22,13 +22,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource(properties = "server.port=8081")
 @PactBroker(scheme = "https", host = "${PACT_BROKER_HOST}",
-        enablePendingPacts = "#{systemProperties['PACT_ENABLE_PENDING'] ?: 'false'",
-        tags={"#{systemProperties['CONSUMER_TAGS'] ?: ''}"},
+        enablePendingPacts = "${PACT_ENABLE_PENDING},",
         authentication = @PactBrokerAuth(token = "${PACT_BROKER_TOKEN}"))
 @ExtendWith(SpringExtension.class)
 @Provider("CalculationAPI")
 @IgnoreNoPactsToVerify
-public class CalculatorBrokerPactTest {
+class CalculatorBrokerPactTest {
 
     @BeforeEach
     void setTarget(PactVerificationContext context) {
@@ -40,12 +39,18 @@ public class CalculatorBrokerPactTest {
     }
 
     @BeforeAll
-    static void pactBrokerSetup(@Value("#{systemProperties['pact_verifier_publish'] ?: 'true'}") String publishResults,
-                                @Value("#{systemProperties['pact_consumer_version'] ?: ''}") String pactConsumerVersion,
-                                @Value("${pact.provider.version}") String pactProviderVersion) {
-        System.setProperty("pact.verifier.publishResults", "true");
+    static void pactBrokerSetup(@Value("${pact_verifier_publish:false}") String publishResults,
+                                @Value("${CONSUMER_TAGS:}") String consumerTags,
+                                @Value("${build.version:unknown}") String pactProviderVersion,
+                                @Value("${pact_consumer_version:unknown}") String pactConsumerVersion,
+                                @Value("${git.commit.id.abbrev}") String gitCommitIdShort) {
+        System.setProperty("pact.verifier.publishResults", publishResults);
+        System.setProperty("pact.provider.version", String.format(pactProviderVersion, '-', gitCommitIdShort));
         System.setProperty("pact.consumer.version", pactConsumerVersion);
-        System.setProperty("pact.provider.version", pactProviderVersion);
+
+        if (consumerTags != null && !consumerTags.isEmpty()) {
+            System.setProperty("pactbroker.tags", consumerTags);
+        }
     }
 
     @TestTemplate
