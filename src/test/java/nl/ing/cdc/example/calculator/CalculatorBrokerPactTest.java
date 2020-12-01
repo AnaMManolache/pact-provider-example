@@ -44,7 +44,7 @@ class CalculatorBrokerPactTest {
                                 @Value("${build.version:unknown}") String pactProviderVersion,
                                 @Value("${git.commit.id.abbrev}") String gitCommitIdShort) {
         System.setProperty("pact.verifier.publishResults", publishResults);
-        System.setProperty("pact.provider.version", String.format(pactProviderVersion, '-', gitCommitIdShort));
+        System.setProperty("pact.provider.version", String.format("%s-%s", pactProviderVersion, gitCommitIdShort));
 
         if (consumerTags != null && !consumerTags.isEmpty()) {
             System.setProperty("pactbroker.tags", consumerTags);
