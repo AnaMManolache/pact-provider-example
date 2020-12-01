@@ -15,8 +15,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-    - name: test pact tags
-      run: echo ${{ env.pactbroker.tags }}
     - name: Build with Maven
       run: mvn verify -B
       env:
