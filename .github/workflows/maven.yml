@@ -18,7 +18,7 @@ jobs:
     - name: Build with Maven
       run: mvn verify -B
       env:
-        CONSUMER_TAGS: ${{ env.pactbroker.tags }}
+        CONSUMER_TAGS: test_feature
         PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
         PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
         PACT_ENABLE_PENDING: false
