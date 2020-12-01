@@ -133,6 +133,7 @@
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <includeOnlyProperties>
                         <includeOnlyProperty>git.commit.id</includeOnlyProperty>
+                        <includeOnlyProperty>git.branch</includeOnlyProperty>
                     </includeOnlyProperties>
                     <gitDescribe>
                            <skip>false</skip>
