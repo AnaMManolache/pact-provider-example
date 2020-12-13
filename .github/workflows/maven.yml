@@ -15,7 +15,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-    - name: Build with Maven
+    - name: Verify pact
       run: mvn verify -B
       env:
         CONSUMER_TAGS: master
