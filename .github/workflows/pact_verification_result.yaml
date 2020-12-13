@@ -1,0 +1,17 @@
+name:  Pact verification result
+
+on:
+  repository_dispatch:
+    types: [pact_verification_result]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Print verification result
+      run: echo ${{ github.event.client_payload.verificationStatus }}
+    - name: Print verification result url
+      run: echo ${{ github.event.client_payload.verificationResultUrl }}
+  
