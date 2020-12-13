@@ -15,7 +15,6 @@ jobs:
       env:
         RESULT_URL: ${{ github.event.client_payload.verification_result_url }}
     - name: Check verification result
-      if: ${{ github.event.client_payload.verification_status }} != 'success' 
-      run: echo ${{ github.event.client_payload.verification_status }} && exit 1
+      run: if [ ${{ github.event.client_payload.verification_status }} = "success" ];then echo "success";else exit 1;fi
 
   
