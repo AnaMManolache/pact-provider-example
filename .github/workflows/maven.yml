@@ -16,10 +16,8 @@ jobs:
       with:
         java-version: 1.11
     - name: Verify pact
-      run: mvn verify -B
+      run: mvn verify -B  -Dpact.verifier.publishResults=true
       env:
         CONSUMER_TAGS: master
         PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
         PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
-        PACT_ENABLE_PENDING: false
-        pact_verifier_publish: true
