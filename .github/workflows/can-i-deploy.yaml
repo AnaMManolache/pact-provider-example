@@ -6,7 +6,7 @@ on:
       consumer:
         description: 'Name of the consumer'     
         required: true
-        default: 'PactCalculator iOS Client'
+        default: 'PactCalculator\ iOS\ Client'
 
 jobs:
   build:
