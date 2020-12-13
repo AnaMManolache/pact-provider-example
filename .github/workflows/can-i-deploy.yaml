@@ -7,14 +7,12 @@ on:
         description: 'Name of the consumer'     
         required: true
         default: 'PactCalculator\ iOS\ Client'
-      consumerTag:
-        description: 'Consumer tag'     
-        required: false
-        default: ''
-      providerTag:
-        description: 'Provider tag'
-        required: false
-        default: 'master'    
+      consumerIdentifier:
+        required: true
+        default: '--latest'
+      providerIdentifier:
+        required: true
+        default: '--latest master'    
 
 jobs:
   build:
@@ -25,4 +23,4 @@ jobs:
     - uses: actions/setup-ruby@v1
     - run: gem install pact_broker-client
     - name: Check pact successfully verified
-      run: pact-broker can-i-deploy -b ${{ secrets.PACT_BROKER_HOST }} -k ${{ secrets.PACT_BROKER_TOKEN }} -a CalculationAPI --latest ${{ github.event.inputs.providerTag}} -a ${{ github.event.inputs.consumer}} --latest ${{ github.event.inputs.consumerTag}}
+      run: pact-broker can-i-deploy -b ${{ secrets.PACT_BROKER_HOST }} -k ${{ secrets.PACT_BROKER_TOKEN }} -a CalculationAPI ${{ github.event.inputs.providerIdentifier}} -a ${{ github.event.inputs.consumer}} ${{ github.event.inputs.consumerIdentifier}}
