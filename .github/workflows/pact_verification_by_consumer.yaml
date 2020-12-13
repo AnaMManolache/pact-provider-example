@@ -25,7 +25,5 @@ jobs:
         CONSUMER_TAGS: ${{ github.event.client_payload.consumer_tags }}
         PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
         PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
-        PACT_ENABLE_PENDING: false
-        pact_consumer_version:  ${{ github.event.client_payload.consumer_version }}
         pact_verifier_publish: true
         PACT_PROVIDER_VERSION: ${{ env.PACT_PROVIDER_VERSION }}
