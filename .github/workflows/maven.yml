@@ -22,5 +22,4 @@ jobs:
         PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
         PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
         PACT_ENABLE_PENDING: false
-        pact_consumer_version:  6.0.0
         pact_verifier_publish: true
