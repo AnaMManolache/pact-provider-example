@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Print verification result
-      run: echo ${{ github.event.client_payload.verificationStatus }}
+      run: echo ${{ github.event.client_payload.verification_status }}
     - name: Print verification result url
-      run: echo ${{ github.event.client_payload.verificationResultUrl }}
+      run: echo ${{ github.event.client_payload.verification_result_url }}
   
