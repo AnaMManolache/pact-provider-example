@@ -14,5 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/setup-ruby@v1
+    - run: gem install pact_broker-client
     - name: Check pact successfully verified
-      run: cd pact/bin &&  ./pact-broker can-i-deploy -b ${{ secrets.PACT_BROKER_HOST }} -k ${{ secrets.PACT_BROKER_TOKEN }} -a CalculationAPI --latest master -a ${{ github.event.inputs.consumer}} --latest master
+      run: pact-broker can-i-deploy -b ${{ secrets.PACT_BROKER_HOST }} -k ${{ secrets.PACT_BROKER_TOKEN }} -a CalculationAPI --latest master -a ${{ github.event.inputs.consumer}} --latest master
