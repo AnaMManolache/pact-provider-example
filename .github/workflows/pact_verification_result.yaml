@@ -11,7 +11,9 @@ jobs:
 
     steps:
     - name: Print verification result url
-      run: ${{ github.event.client_payload.verification_result_url }}
+      run: echo $RESULT_URL
+      env:
+        RESULT_URL: ${{ github.event.client_payload.verification_result_url }}
     - name: Check verification result
       if: ${{ github.event.client_payload.verification_status }} == 'failure' 
       run: exit 1
