@@ -10,7 +10,7 @@ on:
       consumerTag:
         description: 'Consumer tag'     
         required: false
-        default: 'master'
+        default: ''
       providerTag:
         description: 'Provider tag'
         required: false
