@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Pact provider verification on master
 
 on:
   push:
