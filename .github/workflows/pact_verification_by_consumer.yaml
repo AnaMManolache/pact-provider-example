@@ -10,9 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Determine branch
+      id: branch
+      run: if [ ! -z "$PROVIDER_TAGS" -a "$PROVIDER_TAGS" != " " ] ; then echo ::set-output name=provider_branch::$(echo "${PROVIDER_TAGS%%,*}"; else echo ::set-output name=provider_branch::$("master") ; fi
+      env: 
+        PROVIDER_TAGS: ${{ github.event.client_payload.provider_tags }}
+    - name: Checkout branch
+      uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.client_payload.provider_tag }}
+        ref: ${{ steps.branch.outputs.provider_branch }} 
     - name: Set up JDK 1.11
       uses: actions/setup-java@v1
       with:
