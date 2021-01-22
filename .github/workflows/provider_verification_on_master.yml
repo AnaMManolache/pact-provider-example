@@ -18,6 +18,5 @@ jobs:
     - name: Verify pact
       run: mvn verify -B  -Dpact.verifier.publishResults=true
       env:
-        CONSUMER_TAGS: master
         PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
         PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
