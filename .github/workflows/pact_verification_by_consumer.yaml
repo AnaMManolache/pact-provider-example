@@ -10,19 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Determine the branch (first provider tag, if it exists)
+      id: branch
+      run: if [ ! -z "$PROVIDER_TAGS" -a "$PROVIDER_TAGS" != " " ] ; then echo ::set-output name=provider_branch::$(echo "${PROVIDER_TAGS%%,*}") ; else echo ::set-output name=provider_branch::$("master") ; fi
+      env: 
+        PROVIDER_TAGS: ${{ github.event.client_payload.provider_tags }}
+    - name: Checkout branch 
+      uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.client_payload.provider_tag }}
+        ref: ${{ steps.branch.outputs.provider_branch }} 
     - name: Set up JDK 1.11
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-    - name: Build with Maven
-      run: mvn verify -B
+    - name: Verify pact
+      run: mvn verify -B -Dpact.verifier.publishResults=true
       env:
         CONSUMER_TAGS: ${{ github.event.client_payload.consumer_tags }}
         PACT_BROKER_HOST: ${{ secrets.PACT_BROKER_HOST }}
         PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
-        PACT_ENABLE_PENDING: false
-        pact_consumer_version:  ${{ github.event.client_payload.consumer_version }}
-        pact_verifier_publish: true

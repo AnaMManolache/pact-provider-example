@@ -1,0 +1,22 @@
+name:  Pact verification result
+
+on:
+  repository_dispatch:
+    types: [pact_verification_result]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Print verification result url
+      run: echo $RESULT_URL
+      env:
+        RESULT_URL: ${{ github.event.client_payload.verification_result_url }}
+    - name: Check verification result
+      run: if [ $VERIFICATION_STATUS = "success" ];then :;else exit 1;fi
+      env: 
+        VERIFICATION_STATUS: ${{ github.event.client_payload.verification_status }}
+
+  

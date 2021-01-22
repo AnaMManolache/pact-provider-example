@@ -1,0 +1,26 @@
+name:  Verify compatibility between consumer and provider
+
+on:
+  workflow_dispatch:
+    inputs:
+      consumer:
+        description: 'Name of the consumer'     
+        required: true
+        default: 'PactCalculator\ iOS\ Client'
+      consumerIdentifier:
+        required: true
+        default: '--latest'
+      providerIdentifier:
+        required: true
+        default: '--latest master'    
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/setup-ruby@v1
+    - run: gem install pact_broker-client
+    - name: Check pact successfully verified
+      run: pact-broker can-i-deploy -b ${{ secrets.PACT_BROKER_HOST }} -k ${{ secrets.PACT_BROKER_TOKEN }} -a CalculationAPI ${{ github.event.inputs.providerIdentifier}} -a ${{ github.event.inputs.consumer}} ${{ github.event.inputs.consumerIdentifier}}
