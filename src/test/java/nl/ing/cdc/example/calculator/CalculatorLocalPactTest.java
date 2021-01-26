@@ -20,7 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @Provider("CalculationAPI")
 @PactFolder("pacts")
-public class CalculatorLocalPactTest {
+class CalculatorLocalPactTest {
 
     @BeforeEach
     void setTarget(PactVerificationContext context) {
