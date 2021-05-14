@@ -21,7 +21,7 @@ public enum Operation {
     DIVISION {
         @Override
         public Number calculate(Number first, Number second) {
-            return Integer.valueOf(first.doubleValue() / second.doubleValue());
+            return Integer.divideUnsigned((Integer)first, (Integer) second);
         }
     },
     MULTIPLICATION {
